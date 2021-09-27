@@ -131,3 +131,14 @@ data "aws_vpc" "default" {
 data "aws_subnet_ids" "default" {
   vpc_id = data.aws_vpc.default.id
 }
+
+terraform {
+  backend "s3" {
+    bucket = "dyson1602-up-and-running"
+    key    = "stage/services/webserver-cluster/terraform.tfstate"
+    region = "us-east-2"
+
+    dynamodb_table = "dyson1602-up-and-running-locks"
+    encrypt        = true
+  }
+}
